@@ -1,22 +1,26 @@
-import 'react-app-polyfill/ie11'; // For IE 11 support
-import 'react-app-polyfill/stable';
-import './polyfill'
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { icons } from './assets/icons'
+import "react-app-polyfill/ie11"; // For IE 11 support
+import "react-app-polyfill/stable";
+import "./polyfill";
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+// import { PersistGate } from "redux-persist/integration/react";
+// import store, { persistor, history } from "./configureStore";
+import * as serviceWorker from "./serviceWorker";
+import { icons } from "./assets/icons";
 
-import { Provider } from 'react-redux'
-import store from './store'
+import { Provider } from "react-redux";
+import store from "./store";
 
-React.icons = icons
+React.icons = icons;
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App/>
-  </Provider>,
-  document.getElementById('root')
+	<Provider store={store}>
+		{/* <PersistGate loading={null} persistor={persistor}> */}
+		<App />
+		{/* </PersistGate> */}
+	</Provider>,
+	document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
