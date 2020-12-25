@@ -1,7 +1,9 @@
 import React from "react";
-import { Toaster } from "../../../reusable";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Formik } from "formik";
-import { auth } from "../../../firebase";
+import { Toaster } from "../../../components";
+import { getAuth } from "../../../firebase";
 import {
 	CContainer,
 	CButton,
@@ -22,10 +24,14 @@ import {
 import CIcon from "@coreui/icons-react";
 import { freeSet } from "@coreui/icons";
 import * as Yup from "yup";
+import { setIsLoggedIn } from "../../../redux/actions/auth";
 
 const Login = () => {
 	const [toast, setToast] = React.useState(false);
 	const [message, setMessage] = React.useState("");
+	const firebaseAuth = getAuth();
+	const history = useHistory();
+	const dispatch = useDispatch();
 
 	const validationSchema = function (values) {
 		return Yup.object().shape({
@@ -71,11 +77,14 @@ const Login = () => {
 	};
 
 	const onSubmit = (values) => {
-		auth
+		firebaseAuth
 			.signInWithEmailAndPassword(values.email, values.password)
-			.then((user) => {
+			.then(() => {
 				setToast(true);
+				dispatch(setIsLoggedIn(true));
 				setMessage("User Logged In!");
+
+				history.push("/dashboard");
 			})
 			.catch((error) => {
 				setToast(true);

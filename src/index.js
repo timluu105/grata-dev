@@ -4,21 +4,22 @@ import "./polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-// import { PersistGate } from "redux-persist/integration/react";
-// import store, { persistor, history } from "./configureStore";
 import * as serviceWorker from "./serviceWorker";
 import { icons } from "./assets/icons";
-
 import { Provider } from "react-redux";
-import store from "./store";
+import configureStores from "./redux/configureStore";
+import WrapperCustom from "./components/WrapperCustom";
+
+const initialState = {};
+const store = configureStores(initialState);
 
 React.icons = icons;
 
 ReactDOM.render(
 	<Provider store={store}>
-		{/* <PersistGate loading={null} persistor={persistor}> */}
-		<App />
-		{/* </PersistGate> */}
+		<WrapperCustom>
+			<App />
+		</WrapperCustom>
 	</Provider>,
 	document.getElementById("root")
 );
