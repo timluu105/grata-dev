@@ -4,13 +4,15 @@ Admin portal.
 
 ## Installation
 
-
 ``` bash
 # install app's dependencies
 $ npm install
+
+# initialize firebase for project if it hasnt been done
+$ firebase init
 ```
 
-### Basic usage
+### Running Locally
 
 ``` bash
 # dev server  with hot reload at http://localhost:3000
@@ -26,4 +28,7 @@ Run `build` to build the project. The build artifacts will be stored in the `bui
 ```bash
 # build for production with minification
 $ npm run build
+
+# deploy to firebase
+$ firebase deploy
 ```
