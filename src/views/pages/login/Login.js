@@ -61,7 +61,7 @@ const Login = () => {
 	};
 
 	const initialValues = {
-		email: "",
+		email: localStorage.getItem("user") ? localStorage.getItem("user") : "",
 		password: "",
 	};
 
@@ -78,6 +78,7 @@ const Login = () => {
 					type: "SET_IS_LOGGED_IN",
 					isLoggedIn: true,
 				});
+				localStorage.setItem("user", values.email);
 				history.push("/dashboard");
 			})
 			.catch((error) => {
