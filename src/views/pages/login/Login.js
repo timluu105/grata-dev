@@ -2,7 +2,6 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
-import { Toaster } from "../../../components";
 import { getAuth } from "../../../firebase";
 import {
 	CContainer,
@@ -24,11 +23,8 @@ import {
 import CIcon from "@coreui/icons-react";
 import { freeSet } from "@coreui/icons";
 import * as Yup from "yup";
-import { setIsLoggedIn } from "../../../redux/actions/auth";
 
 const Login = () => {
-	const [toast, setToast] = React.useState(false);
-	const [message, setMessage] = React.useState("");
 	const firebaseAuth = getAuth();
 	const history = useHistory();
 	const dispatch = useDispatch();
@@ -73,15 +69,23 @@ const Login = () => {
 		firebaseAuth
 			.signInWithEmailAndPassword(values.email, values.password)
 			.then(() => {
-				setToast(true);
-				dispatch(setIsLoggedIn(true));
-				setMessage("User Logged In!");
-
+				dispatch({
+					type: "SET_TOAST",
+					toastShow: true,
+					toastMessage: "User Logged In!",
+				});
+				dispatch({
+					type: "SET_IS_LOGGED_IN",
+					isLoggedIn: true,
+				});
 				history.push("/dashboard");
 			})
 			.catch((error) => {
-				setToast(true);
-				setMessage(error.message);
+				dispatch({
+					type: "SET_TOAST",
+					toastShow: false,
+					toastMessage: error.message,
+				});
 			});
 	};
 
@@ -188,8 +192,6 @@ const Login = () => {
 					</CCol>
 				</CRow>
 			</CContainer>
-
-			{toast && <Toaster message={message} />}
 		</div>
 	);
 };

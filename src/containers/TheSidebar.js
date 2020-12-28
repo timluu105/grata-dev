@@ -24,9 +24,7 @@ const TheSidebar = () => {
 		<CSidebar
 			show={show}
 			unfoldable
-			onShowChange={(val) =>
-				dispatch({ type: "SET_SIDEBAR", sidebarShow: !show })
-			}
+			onShowChange={() => dispatch({ type: "SET_SIDEBAR", sidebarShow: !show })}
 		>
 			<CSidebarBrand className="d-md-down-none" to="/">
 				<CIcon

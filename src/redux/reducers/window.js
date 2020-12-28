@@ -29,7 +29,8 @@ const reducer = handleActions(
 
 		[SET_TOAST]: (state, action) => ({
 			...state,
-			toastShow: action.toastMessage,
+			toastShow: action.toastShow,
+			toastMessage: action.toastMessage,
 		}),
 	},
 	initialState

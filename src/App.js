@@ -1,13 +1,20 @@
 import React from "react";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import classNames from "classnames";
 import { getAuth } from "./firebase";
+import {
+	TheSidebar,
+	TheAside,
+	TheFooter,
+	TheHeader,
+	TheContent,
+} from "./containers/index";
 
 import "./scss/style.scss";
 
 const Login = React.lazy(() => import("./views/pages/login/Login"));
-const Page404 = React.lazy(() => import("./views/pages/page404/Page404"));
-const TheLayout = React.lazy(() => import("./containers/TheLayout"));
+// const Page404 = React.lazy(() => import("./views/pages/page404/Page404"));
 
 const firebaseAuth = getAuth();
 
@@ -20,7 +27,12 @@ const loading = (
 const App = () => {
 	const [initialized, setInitialized] = React.useState(false);
 	const { isLoggedIn } = useSelector((state) => state.auth);
+	const { darkMode } = useSelector((state) => state.window);
 	const dispatch = useDispatch();
+	const classes = classNames(
+		"c-app c-default-layout",
+		darkMode && "c-dark-theme"
+	);
 
 	React.useEffect(() => {
 		firebaseAuth.onAuthStateChanged(async (user) => {
@@ -38,47 +50,41 @@ const App = () => {
 		// eslint-disable-next-line
 	}, [dispatch]);
 
-	if (!initialized) return <>Loading...</>;
+	if (!initialized) {
+		return <div>Loading ...</div>;
+	}
 
 	return (
 		<HashRouter>
 			<React.Suspense fallback={loading}>
-				<Switch>
-					<Route
-						exact
-						path="/404"
-						name="Page 404"
-						render={(props) => <Page404 {...props} />}
-					/>
+				{initialized && (
+					<Switch>
+						<Route exact path="/" render={() => <Redirect to="/login" />} />
 
-					<Route
-						exact
-						path="/login"
-						name="Login"
-						render={(props) => <Login {...props} />}
-					/>
-
-					{initialized && (
-						<Switch>
-							<Route
-								path="/dashboard"
-								name="Dashboard"
-								render={(props) => <TheLayout {...props} />}
-							/>
-
+						{!isLoggedIn && (
 							<Route
 								exact
-								path="/"
-								render={() => {
-									if (isLoggedIn) return <Redirect to="/dashboard" />;
-									return <Redirect to="/login" />;
-								}}
+								path="/login"
+								name="Login"
+								render={(props) => <Login {...props} />}
 							/>
+						)}
 
-							<Redirect to="/404" />
-						</Switch>
-					)}
-				</Switch>
+						{isLoggedIn && (
+							<div className={classes}>
+								<TheSidebar />
+								<TheAside />
+								<div className="c-wrapper">
+									<TheHeader />
+									<div className="c-body">
+										<TheContent />
+									</div>
+									<TheFooter />
+								</div>
+							</div>
+						)}
+					</Switch>
+				)}
 			</React.Suspense>
 		</HashRouter>
 	);

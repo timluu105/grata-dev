@@ -1,10 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Toaster from "./Toaster";
 
 const WrapperCustom = (props) => {
+	const { toastShow } = useSelector((state) => state.window);
+
 	return (
 		<React.Fragment>
-			<Toaster />
+			{toastShow && <Toaster />}
 			{props.children}
 		</React.Fragment>
 	);

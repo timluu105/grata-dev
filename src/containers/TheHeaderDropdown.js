@@ -1,4 +1,7 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getAuth } from "../firebase";
 import {
 	CBadge,
 	CDropdown,
@@ -11,6 +14,27 @@ import CIcon from "@coreui/icons-react";
 import { freeSet } from "@coreui/icons";
 
 const TheHeaderDropdown = () => {
+	const history = useHistory();
+	const firebaseAuth = getAuth();
+	const dispatch = useDispatch();
+
+	const handleLogout = () => {
+		firebaseAuth
+			.signOut()
+			.then(() => {
+				dispatch({ type: "SET_IS_LOGGED_IN", isLoggedIn: false });
+				dispatch({
+					type: "SET_TOAST",
+					toastShow: true,
+					toastMessage: "User Logged Out!",
+				});
+				history.push("/login");
+			})
+			.catch((err) => {
+				dispatch({ type: "SET_TOAST", toastShow: true, toastMessage: err });
+			});
+	};
+
 	return (
 		<CDropdown inNav className="c-header-nav-items mx-2" direction="down">
 			<CDropdownToggle className="c-header-nav-link" caret={false}>
@@ -80,7 +104,7 @@ const TheHeaderDropdown = () => {
 					</CBadge>
 				</CDropdownItem>
 				<CDropdownItem divider />
-				<CDropdownItem>
+				<CDropdownItem onClick={handleLogout}>
 					<CIcon content={freeSet.cilLockLocked} className="mfe-2" />
 					Lock Account
 				</CDropdownItem>
