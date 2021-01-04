@@ -1,18 +1,28 @@
-import React from "react";
-// import {
-// 	CBadge,
-// 	CCard,
-// 	CCardBody,
-// 	CCardHeader,
-// 	CCol,
-// 	CDataTable,
-// 	CRow,
-// } from "@coreui/react";
-// import { DocsLink } from "../../components";
-// import usersData from "./UsersData";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { CCardBody, CButton } from "@coreui/react";
+import Modal from "../../components/Modal";
+import AddUser from "./AddUser";
+import UsersTable from "./UsersTable";
 
 const Users = () => {
-	return <>Users</>;
+	const dispatch = useDispatch();
+	const [show, setShow] = useState(false);
+	const handleAddUser = () => {
+		setShow(true);
+	};
+
+	return (
+		<CCardBody>
+			<Modal show={show} setShow={setShow}>
+				<AddUser />
+			</Modal>
+			<CButton onClick={handleAddUser} color="primary" className="mb-2">
+				+ Add User
+			</CButton>
+			<UsersTable />
+		</CCardBody>
+	);
 };
 
 export default Users;

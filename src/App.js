@@ -59,19 +59,25 @@ const App = () => {
 			<React.Suspense fallback={loading}>
 				{initialized && (
 					<Switch>
-						<Route exact path="/" render={() => <Redirect to="/login" />} />
-
 						{!isLoggedIn && (
-							<Route
-								exact
-								path="/login"
-								name="Login"
-								render={(props) => <Login {...props} />}
-							/>
+							<Switch>
+								<Route exact path="/" render={() => <Redirect to="/login" />} />
+								<Route
+									exact
+									path="/login"
+									name="Login"
+									render={(props) => <Login {...props} />}
+								/>
+							</Switch>
 						)}
 
 						{isLoggedIn && (
 							<div className={classes}>
+								<Route
+									exact
+									path="/"
+									redner={() => <Redirect to="/dashboard" />}
+								/>
 								<TheSidebar />
 								<TheAside />
 								<div className="c-wrapper">
