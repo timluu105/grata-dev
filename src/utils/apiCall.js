@@ -24,9 +24,15 @@ export default ({ type, method, path, success }) =>
 			});
 
 			const options = {
-				url: `https://grata-api-gateway-8i6ttwu5.uc.gateway.dev${
+				url: `${
 					typeof path === "function" ? path(action.payload) : path
 				}`,
+
+
+/*				url: `https://grata-api-gateway-8i6ttwu5.uc.gateway.dev${
+					typeof path === "function" ? path(action.payload) : path
+				}`,
+*/
 				method: method,
 				headers: header,
 				data: body,

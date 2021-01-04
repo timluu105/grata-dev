@@ -1,28 +1,15 @@
 {
-	"name": "@coreui/coreui-pro-react-admin-template-starter",
-	"version": "3.0.0",
+	"name": "@gratacda/grata-admin-portal",
+	"version": "1.0.0",
 	"backendurl": "https://grata-api-gateway-8i6ttwu5.uc.gateway.dev",
-	"description": "CoreUI Pro React Admin Template Starter",
+	"description": "Grata Admin Portal",
 	"author": {
-		"name": "CoreUI",
-		"url": "https://coreui.io",
-		"github": "https://github.com/coreui",
-		"twitter": "https://twitter.com/core_ui"
+		"name": "Grata Technologies Inc.",
+		"url": "https://www.gratacda.com"
 	},
-	"contributors": [
-		{
-			"name": "CoreUI Team",
-			"url": "https://github.com/orgs/coreui/people"
-		}
-	],
-	"homepage": ".",
-	"copyright": "Copyright 2017-2020 creativeLabs Łukasz Holeczek",
-	"license": "https://coreui.io/pro/license/",
+	"homepage": "",
+	"copyright": "Copyright 2020 Grata Technologies Inc.",
 	"private": true,
-	"repository": {
-		"type": "git",
-		"url": "git@github.com:coreui/coreui-pro-react-admin-template-starter.git"
-	},
 	"dependencies": {
 		"@coreui/coreui-pro": "^3.2.0",
 		"@coreui/icons": "2.0.0-beta.4",
@@ -66,9 +53,6 @@
 		"zip": "git archive -o coreui-pro-react-admin-template-starter-v$npm_package_version.zip -9 HEAD",
 		"zip-v2": "git archive -o coreui-pro-react-admin-template-starter-v2.zip -9 origin/v2"
 	},
-	"bugs": {
-		"url": "https://github.com/coreui/coreui-pro-react-admin-template-starter/issues"
-	},
 	"eslintConfig": {
 		"extends": "react-app"
 	},
@@ -89,5 +73,6 @@
 	"engines": {
 		"node": ">=8.16",
 		"npm": ">=6"
-	}
+	},
+	"proxy": "https://grata-api-gateway-8i6ttwu5.uc.gateway.dev"
 }

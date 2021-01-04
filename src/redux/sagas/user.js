@@ -5,13 +5,13 @@ import apiCall from "../../utils/apiCall";
 const getUsers = apiCall({
 	type: GET_USERS,
 	method: "get",
-	path: "/users/",
+	path: "/users",
 });
 
 const addUser = apiCall({
 	type: ADD_USER,
 	method: "post",
-	path: "/users/",
+	path: "/users",
 });
 
 const editUser = apiCall({
