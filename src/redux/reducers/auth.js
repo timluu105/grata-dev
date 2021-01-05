@@ -1,4 +1,4 @@
-import { handleActions } from "redux-actions";
+import { createReducer } from "@reduxjs/toolkit";
 import { SET_IS_LOGGED_IN, SET_ID_TOKEN } from "../constants";
 
 const initialState = {
@@ -6,19 +6,14 @@ const initialState = {
 	idToken: null,
 };
 
-const reducer = handleActions(
-	{
-		[SET_IS_LOGGED_IN]: (state, action) => ({
-			...state,
-			isLoggedIn: action.isLoggedIn,
-		}),
+export default createReducer(initialState, {
+	[SET_IS_LOGGED_IN]: (state, { payload }) => ({
+		...state,
+		isLoggedIn: payload.isLoggedIn,
+	}),
 
-		[SET_ID_TOKEN]: (state, action) => ({
-			...state,
-			idToken: action.idToken,
-		}),
-	},
-	initialState
-);
-
-export default reducer;
+	[SET_ID_TOKEN]: (state, { payload }) => ({
+		...state,
+		idToken: payload.idToken,
+	}),
+});

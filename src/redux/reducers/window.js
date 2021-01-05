@@ -1,4 +1,4 @@
-import { handleActions } from "redux-actions";
+import { createReducer } from "@reduxjs/toolkit";
 import { SET_MODE, SET_SIDEBAR, SET_ASIDE, SET_TOAST } from "../constants";
 
 const initialState = {
@@ -10,30 +10,25 @@ const initialState = {
 	toastTimeout: 3000,
 };
 
-const reducer = handleActions(
-	{
-		[SET_MODE]: (state, action) => ({
-			...state,
-			darkMode: action.darkMode,
-		}),
+export default createReducer(initialState, {
+	[SET_MODE]: (state, { payload }) => ({
+		...state,
+		darkMode: payload.darkMode,
+	}),
 
-		[SET_SIDEBAR]: (state, action) => ({
-			...state,
-			sidebarShow: action.sidebarShow,
-		}),
+	[SET_SIDEBAR]: (state, { payload }) => ({
+		...state,
+		sidebarShow: payload.sidebarShow,
+	}),
 
-		[SET_ASIDE]: (state, action) => ({
-			...state,
-			asideShow: action.asideShow,
-		}),
+	[SET_ASIDE]: (state, { payload }) => ({
+		...state,
+		asideShow: payload.asideShow,
+	}),
 
-		[SET_TOAST]: (state, action) => ({
-			...state,
-			toastShow: action.toastShow,
-			toastMessage: action.toastMessage,
-		}),
-	},
-	initialState
-);
-
-export default reducer;
+	[SET_TOAST]: (state, { payload }) => ({
+		...state,
+		toastShow: payload.toastShow,
+		toastMessage: payload.toastMessage,
+	}),
+});

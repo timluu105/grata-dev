@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { setToast } from "../redux/actions/window";
 import { CToast, CToastBody, CToastHeader, CToaster } from "@coreui/react";
 
 const Toaster = () => {
@@ -8,7 +9,7 @@ const Toaster = () => {
 
 	React.useEffect(() => {
 		setTimeout(() => {
-			dispatch({ type: "SET_TOAST", toastShow: false });
+			dispatch(setToast({ toastShow: false }));
 		}, 3000);
 	}, [dispatch, toastShow]);
 

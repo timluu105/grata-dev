@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { setASide } from "../redux/actions/window";
 import {
 	CNav,
 	CNavItem,
@@ -21,7 +22,7 @@ import { freeSet } from "@coreui/icons";
 const TheAside = () => {
 	const { asideShow } = useSelector((state) => state.window);
 	const dispatch = useDispatch();
-	const setState = (state) => dispatch({ type: "SET_ASIDE", asideShow: state });
+	const setState = (state) => dispatch(setASide({ asideShow: state }));
 
 	return (
 		<CSidebar

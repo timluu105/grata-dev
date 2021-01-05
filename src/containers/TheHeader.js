@@ -23,6 +23,7 @@ import {
 	TheHeaderDropdownNotif,
 	TheHeaderDropdownTasks,
 } from "./index";
+import { setSideBar, setMode, setASide } from "../redux/actions/window";
 
 const TheHeader = () => {
 	const dispatch = useDispatch();
@@ -34,14 +35,14 @@ const TheHeader = () => {
 		const val = [true, "responsive"].includes(sidebarShow)
 			? false
 			: "responsive";
-		dispatch({ type: "SET_SIDEBAR", sidebarShow: val });
+		dispatch(setSideBar({ sidebarShow: val }));
 	};
 
 	const toggleSidebarMobile = () => {
 		const val = [false, "responsive"].includes(sidebarShow)
 			? true
 			: "responsive";
-		dispatch({ type: "SET_SIDEBAR", sidebarShow: val });
+		dispatch(setSideBar({ sidebarShow: val }));
 	};
 
 	return (
@@ -76,7 +77,7 @@ const TheHeader = () => {
 				<CToggler
 					inHeader
 					className="ml-3 d-md-down-none"
-					onClick={() => dispatch({ type: "SET_MODE", darkMode: !darkMode })}
+					onClick={() => dispatch(setMode({ darkMode: !darkMode }))}
 					title="Toggle Light/Dark Mode"
 				>
 					<CIcon
@@ -98,7 +99,7 @@ const TheHeader = () => {
 				<CToggler
 					inHeader
 					className="d-md-down-none"
-					onClick={() => dispatch({ type: "SET_ASIDE", asideShow: !asideShow })}
+					onClick={() => dispatch(setASide({ asideShow: !asideShow }))}
 				>
 					<CIcon
 						className="mr-2"

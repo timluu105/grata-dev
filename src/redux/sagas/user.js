@@ -5,7 +5,7 @@ import apiCall from "../../utils/apiCall";
 const getUsers = apiCall({
 	type: GET_USERS,
 	method: "get",
-	path: "/api/users",
+	path: "/users",
 });
 
 const addUser = apiCall({
@@ -26,7 +26,7 @@ const removeUser = apiCall({
 	path: ({ id }) => `/users/${id}/`,
 });
 
-export default function* rootSaga() {
+export default function* userSaga() {
 	yield takeLatest(GET_USERS, getUsers);
 	yield takeLatest(ADD_USER, addUser);
 	yield takeLatest(REMOVE_USER, removeUser);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
@@ -10,6 +10,8 @@ import {
 	TheHeader,
 	TheContent,
 } from "./containers/index";
+import LoadingFallback from "./components/LoadingFallback";
+import { setIdToken, setIsLoggedIn } from "./redux/actions/auth";
 
 import "./scss/style.scss";
 
@@ -34,13 +36,21 @@ const App = () => {
 		darkMode && "c-dark-theme"
 	);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		firebaseAuth.onAuthStateChanged(async (user) => {
 			if (user) {
 				const fbIdToken = await user.getIdToken();
 
-				dispatch({ type: "SET_IS_LOGGED_IN", isLoggedIn: true });
-				dispatch({ type: "SET_ID_TOKEN", idToken: fbIdToken });
+				dispatch(
+					setIdToken({
+						idToken: fbIdToken,
+					})
+				);
+				dispatch(
+					setIsLoggedIn({
+						isLoggedIn: true,
+					})
+				);
 			}
 
 			if (!initialized) {
@@ -51,7 +61,7 @@ const App = () => {
 	}, [dispatch]);
 
 	if (!initialized) {
-		return <div>Loading ...</div>;
+		return <LoadingFallback />;
 	}
 
 	return (

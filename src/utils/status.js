@@ -1,3 +1,3 @@
-export const Pending = (type) => `${type}_PENDING`;
-export const Success = (type) => `${type}_SUCCESS`;
-export const Fail = (type) => `${type}_FAIL`;
+export const requestPending = (type) => `${type}_PENDING`;
+export const requestSuccess = (type) => `${type}_SUCCESS`;
+export const requestFail = (type) => `${type}_FAIL`;

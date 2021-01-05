@@ -1,7 +1,6 @@
 {
 	"name": "@gratacda/grata-admin-portal",
 	"version": "1.0.0",
-	"backendurl": "https://grata-api-gateway-8i6ttwu5.uc.gateway.dev",
 	"description": "Grata Admin Portal",
 	"author": {
 		"name": "Grata Technologies Inc.",
@@ -15,6 +14,7 @@
 		"@coreui/icons": "2.0.0-beta.4",
 		"@coreui/icons-react": "^1.0.1",
 		"@coreui/react": "^3.0.1",
+		"@reduxjs/toolkit": "^1.5.0",
 		"axios": "^0.21.1",
 		"classnames": "^2.2.6",
 		"connected-react-router": "^6.8.0",
@@ -37,6 +37,7 @@
 		"redux-actions": "^2.6.5",
 		"redux-persist": "^6.0.0",
 		"redux-saga": "^1.1.3",
+		"spinkit": "^2.0.1",
 		"yup": "^0.32.8"
 	},
 	"devDependencies": {

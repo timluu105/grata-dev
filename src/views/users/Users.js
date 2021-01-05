@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { CCardBody, CButton } from "@coreui/react";
 import Modal from "../../components/Modal";
 import AddUser from "./AddUser";
 import UsersTable from "./UsersTable";
 
 const Users = () => {
-	const dispatch = useDispatch();
 	const [show, setShow] = useState(false);
 	const handleAddUser = () => {
 		setShow(true);

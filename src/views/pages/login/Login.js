@@ -23,6 +23,8 @@ import {
 import CIcon from "@coreui/icons-react";
 import { freeSet } from "@coreui/icons";
 import * as Yup from "yup";
+import { setIsLoggedIn } from "../../../redux/actions/auth";
+import { setToast } from "../../../redux/actions/window";
 
 const Login = () => {
 	const firebaseAuth = getAuth();
@@ -69,24 +71,30 @@ const Login = () => {
 		firebaseAuth
 			.signInWithEmailAndPassword(values.email, values.password)
 			.then(() => {
-				dispatch({
-					type: "SET_TOAST",
-					toastShow: true,
-					toastMessage: "User Logged In!",
-				});
-				dispatch({
-					type: "SET_IS_LOGGED_IN",
-					isLoggedIn: true,
-				});
 				localStorage.setItem("user", values.email);
+
+				dispatch(
+					setToast({
+						toastShow: true,
+						toastMessage: "User Logged In!",
+					})
+				);
+
+				dispatch(
+					setIsLoggedIn({
+						isLoggedIn: true,
+					})
+				);
+
 				history.push("/dashboard");
 			})
 			.catch((error) => {
-				dispatch({
-					type: "SET_TOAST",
-					toastShow: false,
-					toastMessage: error.message,
-				});
+				dispatch(
+					setToast({
+						toastShow: true,
+						toastMessage: error.message,
+					})
+				);
 			});
 	};
 

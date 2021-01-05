@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "../../redux/actions/user";
 import { CCardBody, CButton, CDataTable, CRow, CCol } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { freeSet } from "@coreui/icons";
-// import { usersData } from "./usersData";
 
-const UsersTable = () => {
+const UsersTable = (props) => {
 	const dispatch = useDispatch();
-	dispatch({ type: "GET_USERS", page: 1 });
-	// const [details, setDetails] = useState([]);
 	const { users } = useSelector((state) => state.user);
+
+	useEffect(() => {
+		dispatch(getUsers());
+	}, []);
 
 	const fields = [
 		{ key: "first_name", _style: { width: "10%" } },
@@ -27,7 +29,6 @@ const UsersTable = () => {
 	const handleEdit = () => {};
 
 	const handleRemove = () => {};
-
 	return (
 		<CCardBody>
 			<CDataTable

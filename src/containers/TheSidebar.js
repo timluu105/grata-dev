@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { setSideBar } from "../redux/actions/window";
 import {
 	CCreateElement,
 	CSidebar,
@@ -24,7 +25,7 @@ const TheSidebar = () => {
 		<CSidebar
 			show={show}
 			unfoldable
-			onShowChange={() => dispatch({ type: "SET_SIDEBAR", sidebarShow: !show })}
+			onShowChange={() => dispatch(setSideBar({ sidebarShow: !show }))}
 		>
 			<CSidebarBrand className="d-md-down-none" to="/">
 				<CIcon

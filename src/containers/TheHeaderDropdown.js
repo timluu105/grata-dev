@@ -2,6 +2,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getAuth } from "../firebase";
+import { setIsLoggedIn } from "../redux/actions/auth";
+import { setToast } from "../redux/actions/window";
 import {
 	CBadge,
 	CDropdown,
@@ -22,16 +24,14 @@ const TheHeaderDropdown = () => {
 		firebaseAuth
 			.signOut()
 			.then(() => {
-				dispatch({ type: "SET_IS_LOGGED_IN", isLoggedIn: false });
-				dispatch({
-					type: "SET_TOAST",
-					toastShow: true,
-					toastMessage: "User Logged Out!",
-				});
+				dispatch(setIsLoggedIn({ isLoggedIn: false }));
+				dispatch(
+					setToast({ toastShow: true, toastMessage: "User Logged Out!" })
+				);
 				history.push("/login");
 			})
 			.catch((err) => {
-				dispatch({ type: "SET_TOAST", toastShow: true, toastMessage: err });
+				dispatch(setToast({ toastShow: true, toastMessage: err }));
 			});
 	};
 

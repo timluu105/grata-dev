@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { call, put } from "redux-saga/effects";
 import { get } from "lodash-es";
 import axios from "axios";
-import { Fail, Pending, Success } from "./status";
+import { requestFail, requestPending, requestSuccess } from "./status";
 
 export default ({ type, method, path, success }) =>
 	function* (action) {
@@ -20,19 +20,11 @@ export default ({ type, method, path, success }) =>
 
 		try {
 			yield put({
-				type: Pending(type),
+				type: requestPending(type),
 			});
 
 			const options = {
-				url: `${
-					typeof path === "function" ? path(action.payload) : path
-				}`,
-
-
-/*				url: `https://grata-api-gateway-8i6ttwu5.uc.gateway.dev${
-					typeof path === "function" ? path(action.payload) : path
-				}`,
-*/
+				url: `${typeof path === "function" ? path(action.payload) : path}`,
 				method: method,
 				headers: header,
 				data: body,
@@ -41,7 +33,7 @@ export default ({ type, method, path, success }) =>
 			const res = yield call(axios.request, options);
 
 			yield put({
-				type: Success(type),
+				type: requestSuccess(type),
 				payload: res.data,
 			});
 
@@ -51,7 +43,7 @@ export default ({ type, method, path, success }) =>
 			const errRes = get(err, "response", err);
 
 			yield put({
-				type: Fail(type),
+				type: requestFail(type),
 				payload: errRes,
 			});
 			failPayload && failPayload(err);
