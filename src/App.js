@@ -85,6 +85,11 @@ const App = () => {
 							<div className={classes}>
 								<Route
 									exact
+									path="/login"
+									redner={() => <Redirect to="/dashboard" />}
+								/>
+								<Route
+									exact
 									path="/"
 									redner={() => <Redirect to="/dashboard" />}
 								/>

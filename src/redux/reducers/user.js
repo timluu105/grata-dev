@@ -16,7 +16,7 @@ import {
 const initialState = {
 	users: [],
 	user: {},
-	avatar: {},
+	avatar: "",
 	loading: true,
 	status: "INIT",
 	params: {
@@ -31,15 +31,12 @@ export default createReducer(initialState, {
 		user: payload,
 	}),
 
-	[requestSuccess(ADD_AVATAR)]: (state, { payload }) => {
-		console.log("payload = ", payload);
-		return {
-			...state,
-			imgUrl: payload.filename,
-			status: requestSuccess(ADD_AVATAR),
-			error: null,
-		};
-	},
+	[requestSuccess(ADD_AVATAR)]: (state, { payload }) => ({
+		...state,
+		imgUrl: payload.filename,
+		status: requestSuccess(ADD_AVATAR),
+		error: null,
+	}),
 
 	[requestFail(ADD_AVATAR)]: (state, { payload }) => ({
 		...state,
@@ -47,23 +44,17 @@ export default createReducer(initialState, {
 		error: payload.error,
 	}),
 
-	[requestSuccess(GET_AVATAR)]: (state, { payload }) => {
-		return {
-			...state,
-			avatar: payload,
-			status: requestSuccess(GET_AVATAR),
-			error: null,
-		};
-	},
+	[requestSuccess(GET_AVATAR)]: (state, { payload }) => ({
+		...state,
+		avatar: payload,
+		status: requestSuccess(GET_AVATAR),
+		error: null,
+	}),
 
-	[requestFail(GET_AVATAR)]: (state, { payload }) => {
-		return {
-			...state,
-			avatar: payload,
-			status: requestFail(GET_AVATAR),
-			error: payload.error,
-		};
-	},
+	[requestPending(GET_AVATAR)]: (state, { payload }) => ({
+		...state,
+		status: requestPending(GET_AVATAR),
+	}),
 
 	[requestSuccess(GET_USERS)]: (state, { payload }) => ({
 		...state,

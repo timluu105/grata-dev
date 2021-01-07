@@ -1,14 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, getUsers, getAvatar } from "../../redux/actions/user";
-import {
-	CCardBody,
-	CButton,
-	CDataTable,
-	CRow,
-	CCol,
-	CImg,
-} from "@coreui/react";
+import { CCardBody, CButton, CDataTable, CRow, CCol } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { freeSet } from "@coreui/icons";
 
@@ -90,18 +83,6 @@ const UsersTable = (props) => {
 							} else {
 								return <td>Admin</td>;
 							}
-						},
-						avatar: (item) => {
-							return (
-								<td>
-									<CImg
-										src={item.avatar}
-										aria-label="Avatar"
-										width={40}
-										height={40}
-									/>
-								</td>
-							);
 						},
 						edit: (item, index) => {
 							return (

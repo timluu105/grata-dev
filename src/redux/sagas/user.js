@@ -21,6 +21,7 @@ const getAvatar = apiCall({
 	method: "get",
 	path: ({ id }) => `/images/${id}`,
 	isFormData: true,
+	isBlob: true,
 });
 
 const getUsers = apiCall({
@@ -38,13 +39,13 @@ const addUser = apiCall({
 const editUser = apiCall({
 	type: EDIT_USER,
 	method: "put",
-	path: ({ id }) => `/users/${id}/`,
+	path: ({ id }) => `/users/${id}`,
 });
 
 const removeUser = apiCall({
 	type: REMOVE_USER,
 	method: "delete",
-	path: ({ id }) => `/users/${id}/`,
+	path: ({ id }) => `/users/${id}`,
 });
 
 export default function* userSaga() {

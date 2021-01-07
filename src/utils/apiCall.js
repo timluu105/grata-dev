@@ -4,7 +4,7 @@ import axios from "axios";
 import { requestFail, requestPending, requestSuccess } from "./status";
 import { store } from "../index";
 
-export default ({ type, method, path, success, isFormData }) =>
+export default ({ type, method, path, success, isFormData, isBlob }) =>
 	function* (action) {
 		const { body, params, success: successPayload, fail: failPayload } =
 			action.payload || {};
@@ -28,13 +28,17 @@ export default ({ type, method, path, success, isFormData }) =>
 				type: requestPending(type),
 			});
 
-			const options = {
+			let options = {
 				url: `${typeof path === "function" ? path(action.payload) : path}`,
 				method: method,
 				headers: header,
 				data: body,
 				params,
 			};
+
+			if (isBlob) {
+				options.responseType = "blob";
+			}
 
 			const res = yield call(axios.request, options);
 

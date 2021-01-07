@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import Image from "../../components/Image";
 import { useDispatch, useSelector } from "react-redux";
-import { editUser } from "../../redux/actions/user";
+import { editUser, getUsers } from "../../redux/actions/user";
+import { setToast } from "../../redux/actions/window";
 import { Formik } from "formik";
 import {
 	CForm,
@@ -17,34 +19,14 @@ import {
 	CModalFooter,
 	CModalHeader,
 	CModalTitle,
-	CImg,
 } from "@coreui/react";
 import * as Yup from "yup";
 
 const EditUser = (props) => {
 	const { handleEditModal, setHandleEditModal } = props;
-	const { user, avatar } = useSelector((state) => state.user);
+	const { user } = useSelector((state) => state.user);
+
 	const dispatch = useDispatch();
-	const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-
-	// useEffect(() => {
-	// 	console.log(avatar);
-
-	// 	if (avatar) {
-	//     try {
-	//       const canvas = avatar.getImage();
-
-	//       fetch(canvas.toDataURL('image/png'))
-	//         .then(res => res.blob())
-	//         .then(blob => {
-	//           data.append('file', blob);
-	//           uploadProfileAvatarRequest(data);
-	//         });
-	//     } catch (e) {
-	//       console.log(e);
-	//     }
-	//   }
-	// }, [avatar]);
 
 	const validationSchema = function (values) {
 		return Yup.object().shape({
@@ -53,12 +35,8 @@ const EditUser = (props) => {
 			email: Yup.string()
 				.email("Invalid email address")
 				.required("Email is required"),
-			cell_phone: Yup.string()
-				.matches(phoneRegExp, "Mobile Phone number is not valid")
-				.required("Mobile Phone Number is required"),
-			home_phone: Yup.string()
-				.matches(phoneRegExp, "Home Phone number is not valid")
-				.required("Home Phone Number is required"),
+			cell_phone: Yup.string().required("Mobile Phone Number is required"),
+			home_phone: Yup.string().required("Home Phone Number is required"),
 			building_id: Yup.number().min(1).required("Building ID is required"),
 			role_id: Yup.string().length(1, "Role ID is required"),
 			type_id: Yup.string().length(1, "Type ID is required"),
@@ -92,8 +70,6 @@ const EditUser = (props) => {
 		const role_id = parseInt(values.role_id, 10);
 		const type_id = parseInt(values.type_id, 10);
 
-		console.log("user ====> ", user);
-
 		const userData = {
 			avatar: user.avatar,
 			...values,
@@ -106,19 +82,26 @@ const EditUser = (props) => {
 				id: user.id,
 				body: userData,
 				success: () => {
+					dispatch(getUsers());
+					dispatch(
+						setToast({
+							toastShow: true,
+							toastMessage: "User Successfully Updated!",
+						})
+					);
 					setHandleEditModal(false);
+				},
+				fail: () => {
+					dispatch(
+						setToast({
+							toastShow: true,
+							toastMessage: "User Update Failed",
+						})
+					);
 				},
 			})
 		);
 	};
-
-	// const onDrop = (picture) => {
-	// 	if (picture && picture.length > 0) {
-	// 		const data = new FormData();
-	// 		data.append("image", picture[0], picture[0].name);
-	// 		dispatch(updateAvatar({ body: data }));
-	// 	}
-	// };
 
 	return (
 		<Formik
@@ -146,7 +129,7 @@ const EditUser = (props) => {
 						</CModalHeader>
 						<CModalBody>
 							<CFormGroup>
-								<CImg src={`data:image/jpg;base64,${avatar}`} />
+								<Image />
 							</CFormGroup>
 							<CFormGroup row>
 								<CCol>
@@ -274,7 +257,7 @@ const EditUser = (props) => {
 										id="role_id"
 										valid={!errors.role_id}
 										invalid={touched.role_id && !!errors.role_id}
-										value={user.role_id}
+										defaultValue={user.role_id}
 									>
 										<option value={null}>Please Select</option>
 										<option value={1}>User</option>
@@ -293,7 +276,7 @@ const EditUser = (props) => {
 										invalid={touched.type_id && !!errors.type_id}
 										name="type_id"
 										id="type_id"
-										value={user.type_id}
+										value={user.role_id || handleChange}
 									>
 										<option value={null}>Please Select</option>
 										<option value={1}>Resident</option>

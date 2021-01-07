@@ -27,7 +27,6 @@ const AddUser = () => {
 	const { imgUrl } = useSelector((state) => state.user);
 	const history = useHistory();
 	const dispatch = useDispatch();
-	const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 	const validationSchema = function (values) {
 		return Yup.object().shape({
@@ -36,12 +35,8 @@ const AddUser = () => {
 			email: Yup.string()
 				.email("Invalid email address")
 				.required("Email is required"),
-			cell_phone: Yup.string()
-				.matches(phoneRegExp, "Mobile Phone number is not valid")
-				.required("Mobile Phone Number is required"),
-			home_phone: Yup.string()
-				.matches(phoneRegExp, "Home Phone number is not valid")
-				.required("Home Phone Number is required"),
+			cell_phone: Yup.string().required("Mobile Phone Number is required"),
+			home_phone: Yup.string().required("Home Phone Number is required"),
 			building_id: Yup.number().min(1).required("Building ID is required"),
 			role_id: Yup.string().length(1, "Role ID is required"),
 			type_id: Yup.string().length(1, "Type ID is required"),
