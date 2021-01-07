@@ -1,18 +1,23 @@
-import { useSelector } from "react-redux";
 import { call, put } from "redux-saga/effects";
 import { get } from "lodash-es";
 import axios from "axios";
 import { requestFail, requestPending, requestSuccess } from "./status";
+import { store } from "../index";
 
-export default ({ type, method, path, success }) =>
+export default ({ type, method, path, success, isFormData }) =>
 	function* (action) {
 		const { body, params, success: successPayload, fail: failPayload } =
 			action.payload || {};
 
-		const { idToken } = useSelector((state) => state.auth);
-		let header = {
-			"Content-Type": "application/json",
-		};
+		const { idToken } = store.getState().auth;
+
+		let header = {};
+
+		if (!isFormData) {
+			header = {
+				"Content-Type": "application/json",
+			};
+		}
 
 		if (idToken) {
 			header["Authorization"] = `Bearer ${idToken}`;
@@ -30,6 +35,7 @@ export default ({ type, method, path, success }) =>
 				data: body,
 				params,
 			};
+
 			const res = yield call(axios.request, options);
 
 			yield put({

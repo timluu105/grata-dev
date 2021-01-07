@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
@@ -27,7 +27,7 @@ const loading = (
 );
 
 const App = () => {
-	const [initialized, setInitialized] = React.useState(false);
+	const [initialized, setInitialized] = useState(false);
 	const { isLoggedIn } = useSelector((state) => state.auth);
 	const { darkMode } = useSelector((state) => state.window);
 	const dispatch = useDispatch();

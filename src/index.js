@@ -11,7 +11,7 @@ import configureStores from "./redux/configureStore";
 import WrapperCustom from "./components/WrapperCustom";
 
 const initialState = {};
-const store = configureStores(initialState);
+export const store = configureStores(initialState);
 
 React.icons = icons;
 

@@ -1,5 +1,12 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { GET_USERS, ADD_USER, EDIT_USER, REMOVE_USER } from "../constants";
+import {
+	GET_USERS,
+	ADD_USER,
+	EDIT_USER,
+	GET_USER,
+	ADD_AVATAR,
+	GET_AVATAR,
+} from "../constants";
 import {
 	requestSuccess,
 	requestFail,
@@ -8,6 +15,8 @@ import {
 
 const initialState = {
 	users: [],
+	user: {},
+	avatar: {},
 	loading: true,
 	status: "INIT",
 	params: {
@@ -17,9 +26,48 @@ const initialState = {
 };
 
 export default createReducer(initialState, {
+	[GET_USER]: (state, { payload }) => ({
+		...state,
+		user: payload,
+	}),
+
+	[requestSuccess(ADD_AVATAR)]: (state, { payload }) => {
+		console.log("payload = ", payload);
+		return {
+			...state,
+			imgUrl: payload.filename,
+			status: requestSuccess(ADD_AVATAR),
+			error: null,
+		};
+	},
+
+	[requestFail(ADD_AVATAR)]: (state, { payload }) => ({
+		...state,
+		status: requestFail(ADD_AVATAR),
+		error: payload.error,
+	}),
+
+	[requestSuccess(GET_AVATAR)]: (state, { payload }) => {
+		return {
+			...state,
+			avatar: payload,
+			status: requestSuccess(GET_AVATAR),
+			error: null,
+		};
+	},
+
+	[requestFail(GET_AVATAR)]: (state, { payload }) => {
+		return {
+			...state,
+			avatar: payload,
+			status: requestFail(GET_AVATAR),
+			error: payload.error,
+		};
+	},
+
 	[requestSuccess(GET_USERS)]: (state, { payload }) => ({
 		...state,
-		users: payload,
+		users: payload.sort((a, b) => a.id - b.id),
 		status: requestSuccess(GET_USERS),
 		error: null,
 	}),
@@ -36,29 +84,33 @@ export default createReducer(initialState, {
 		error: payload.error,
 	}),
 
-	// [requestSuccess(ADD_USER)]: (state, { payload }) => ({
-	// 	...state,
-	// }),
+	[requestSuccess(ADD_USER)]: (state, { payload }) => ({
+		...state,
+		status: requestSuccess(ADD_USER),
+		error: payload.error,
+	}),
 
-	// [requestPending(ADD_USER)]: (state, { payload }) => ({
-	// 	...state,
-	// }),
+	[requestPending(ADD_USER)]: (state, { payload }) => ({
+		...state,
+	}),
 
-	// [requestFail(ADD_USER)]: (state, { payload }) => ({
-	// 	...state,
-	// }),
+	[requestFail(ADD_USER)]: (state, { payload }) => ({
+		...state,
+		status: requestSuccess(ADD_USER),
+		error: payload.error,
+	}),
 
-	// [requestSuccess(EDIT_USER)]: (state, { payload }) => ({
-	// 	...state,
-	// }),
+	[requestSuccess(EDIT_USER)]: (state, { payload }) => ({
+		...state,
+	}),
 
-	// [requestPending(EDIT_USER)]: (state, { payload }) => ({
-	// 	...state,
-	// }),
+	[requestPending(EDIT_USER)]: (state, { payload }) => ({
+		...state,
+	}),
 
-	// [requestFail(EDIT_USER)]: (state, { payload }) => ({
-	// 	...state,
-	// }),
+	[requestFail(EDIT_USER)]: (state, { payload }) => ({
+		...state,
+	}),
 
 	// [requestSuccess(REMOVE_USER)]: (state, { payload }) => ({
 	// 	...state,

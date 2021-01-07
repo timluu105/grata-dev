@@ -1,6 +1,27 @@
 import { takeLatest } from "redux-saga/effects";
-import { GET_USERS, ADD_USER, EDIT_USER, REMOVE_USER } from "../constants";
+import {
+	GET_USERS,
+	ADD_USER,
+	EDIT_USER,
+	REMOVE_USER,
+	ADD_AVATAR,
+	GET_AVATAR,
+} from "../constants";
 import apiCall from "../../utils/apiCall";
+
+const addAvatar = apiCall({
+	type: ADD_AVATAR,
+	method: "post",
+	path: "/images",
+	isFormData: true,
+});
+
+const getAvatar = apiCall({
+	type: GET_AVATAR,
+	method: "get",
+	path: ({ id }) => `/images/${id}`,
+	isFormData: true,
+});
 
 const getUsers = apiCall({
 	type: GET_USERS,
@@ -31,4 +52,6 @@ export default function* userSaga() {
 	yield takeLatest(ADD_USER, addUser);
 	yield takeLatest(REMOVE_USER, removeUser);
 	yield takeLatest(EDIT_USER, editUser);
+	yield takeLatest(ADD_AVATAR, addAvatar);
+	yield takeLatest(GET_AVATAR, getAvatar);
 }

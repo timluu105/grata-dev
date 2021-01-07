@@ -1,24 +1,27 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { CCardBody, CButton } from "@coreui/react";
-import Modal from "../../components/Modal";
-import AddUser from "./AddUser";
+import EditUser from "./EditUser";
 import UsersTable from "./UsersTable";
 
 const Users = () => {
-	const [show, setShow] = useState(false);
+	const [handleEditModal, setHandleEditModal] = useState(false);
+	const history = useHistory();
+
 	const handleAddUser = () => {
-		setShow(true);
+		history.push("/adduser");
 	};
 
 	return (
 		<CCardBody>
-			<Modal show={show} setShow={setShow}>
-				<AddUser />
-			</Modal>
 			<CButton onClick={handleAddUser} color="primary" className="mb-2">
 				+ Add User
 			</CButton>
-			<UsersTable />
+			<UsersTable setHandleEditModal={setHandleEditModal} />
+			<EditUser
+				handleEditModal={handleEditModal}
+				setHandleEditModal={setHandleEditModal}
+			/>
 		</CCardBody>
 	);
 };

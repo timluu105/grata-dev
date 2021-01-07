@@ -7,8 +7,6 @@ import {
 	CModalHeader,
 	CModalTitle,
 } from "@coreui/react";
-// import CIcon from "@coreui/icons-react";
-// import { freeSet } from "@coreui/icons";
 
 const Modal = (props) => {
 	const { show, setShow } = props;
@@ -17,12 +15,12 @@ const Modal = (props) => {
 		<>
 			<CModal show={show} onClose={() => setShow(!show)} color="primary">
 				<CModalHeader closeButton>
-					<CModalTitle>Modal title</CModalTitle>
+					<CModalTitle>Add New User</CModalTitle>
 				</CModalHeader>
 				<CModalBody>{props.children}</CModalBody>
 				<CModalFooter>
 					<CButton color="primary" onClick={() => setShow(!show)}>
-						Do Something
+						Save
 					</CButton>{" "}
 					<CButton color="secondary" onClick={() => setShow(!show)}>
 						Cancel

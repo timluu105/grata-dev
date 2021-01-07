@@ -6,6 +6,10 @@ module.exports = function (app) {
 		createProxyMiddleware({
 			target: "https://grata-api-gateway-8i6ttwu5.uc.gateway.dev",
 			changeOrigin: true,
+			pathRewrite: {
+				"^/api/users": "/users",
+				"^/api/images": "/images",
+			},
 		})
 	);
 };
