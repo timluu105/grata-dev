@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 import { getAuth } from "../../../firebase";
+import { ReactComponent as Logo } from "../../../assets/icons/logo.svg";
 import {
 	CContainer,
 	CButton,
@@ -124,8 +125,16 @@ const Login = () => {
 												noValidate
 												name="LoginForm"
 											>
-												<h1>Login</h1>
-												<p className="text-muted">Sign In to your account</p>
+												<div className="d-flex">
+													<Logo width={70} height={70} />
+													<div className="d-absolute">
+														<p className="pl-1 h1">Login</p>
+														<p className="pl-1 text-muted">
+															Sign In to your account
+														</p>
+													</div>
+												</div>
+
 												<CFormGroup>
 													<CLabel htmlFor="nf-email">Email</CLabel>
 													<CInputGroup className="mb-3">

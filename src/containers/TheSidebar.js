@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSideBar } from "../redux/actions/window";
+import { ReactComponent as Logo } from "../assets/icons/logo.svg";
 import {
 	CCreateElement,
 	CSidebar,
@@ -27,12 +28,13 @@ const TheSidebar = () => {
 			unfoldable
 			onShowChange={() => dispatch(setSideBar({ sidebarShow: !show }))}
 		>
-			<CSidebarBrand className="d-md-down-none" to="/">
-				<CIcon
-					className="c-sidebar-brand-full"
-					name="logo-negative"
-					height={35}
-				/>
+			<CSidebarBrand
+				className="d-md-down-none"
+				style={{ "justify-content": "left" }}
+				to="/"
+			>
+				<Logo width={55} height={55} />
+
 				<CIcon
 					className="c-sidebar-brand-minimized"
 					name="sygnet"
