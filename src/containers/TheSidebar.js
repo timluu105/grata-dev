@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSideBar } from "../redux/actions/window";
 import { ReactComponent as Logo } from "../assets/icons/logo.svg";
+import { ReactComponent as Name } from "../assets/icons/name.svg";
 import {
 	CCreateElement,
 	CSidebar,
@@ -34,6 +35,7 @@ const TheSidebar = () => {
 				to="/"
 			>
 				<Logo width={55} height={55} />
+				<Name width={100} height={55} />
 
 				<CIcon
 					className="c-sidebar-brand-minimized"
